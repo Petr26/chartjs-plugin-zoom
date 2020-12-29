@@ -90,6 +90,9 @@ plugins: {
 			//   },
 			mode: 'xy',
 
+			// Sticks zoom to 'right' or 'left' side of chart. Works only for x axis.
+			stickSide: 'right',
+
 			rangeMin: {
 				// Format of min zoom range depends on scale type
 				x: null,
