@@ -1,7 +1,21 @@
-'use strict';
+/*!
+ * @license
+ * chartjs-plugin-zoom
+ * http://chartjs.org/
+ * Version: 0.7.7
+ *
+ * Copyright 2020 Chart.js Contributors
+ * Released under the MIT license
+ * https://github.com/chartjs/chartjs-plugin-zoom/blob/master/LICENSE.md
+ */
+(function (global, factory) {
+typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('chart.js'), require('hammerjs')) :
+typeof define === 'function' && define.amd ? define(['chart.js', 'hammerjs'], factory) :
+(global = global || self, global.ChartZoom = factory(global.Chart, global.Hammer));
+}(this, (function (Chart, Hammer) { 'use strict';
 
-import Chart from 'chart.js';
-import Hammer from 'hammerjs';
+Chart = Chart && Object.prototype.hasOwnProperty.call(Chart, 'default') ? Chart['default'] : Chart;
+Hammer = Hammer && Object.prototype.hasOwnProperty.call(Hammer, 'default') ? Hammer['default'] : Hammer;
 
 var helpers = Chart.helpers;
 
@@ -683,4 +697,7 @@ var zoomPlugin = {
 };
 
 Chart.register(zoomPlugin);
-export default zoomPlugin;
+
+return zoomPlugin;
+
+})));
