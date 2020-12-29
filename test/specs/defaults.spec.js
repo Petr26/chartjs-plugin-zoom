@@ -12,7 +12,8 @@ describe('defaults', function() {
 			enabled: false,
 			mode: 'xy',
 			sensitivity: 3,
-			speed: 0.1
+			speed: 0.1,
+			stickSide: undefined
 		}
 	};
 
