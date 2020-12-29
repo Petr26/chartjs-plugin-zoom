@@ -359,7 +359,8 @@ var zoomPlugin = {
 			enabled: false,
 			mode: 'xy',
 			sensitivity: 3,
-			speed: 0.1
+			speed: 0.1,
+			stickSide: undefined
 		}
 	},
 
@@ -448,17 +449,23 @@ var zoomPlugin = {
 				return;
 			}
 
+			var zoomOptions = chartInstance.$zoom._options.zoom;
+			var speedPercent = zoomOptions.speed;
+			var stickSide = zoomOptions.stickSide;
+
 			var rect = event.target.getBoundingClientRect();
-			var offsetX = event.clientX - rect.left;
+			var offsetX;
+
+			if (stickSide === 'right') offsetX = rect.right;
+			else if (stickSide === 'left') offsetX = rect.left;
+			else offsetX = event.clientX - rect.left;
+
 			var offsetY = event.clientY - rect.top;
 
 			var center = {
 				x: offsetX,
 				y: offsetY
 			};
-
-			var zoomOptions = chartInstance.$zoom._options.zoom;
-			var speedPercent = zoomOptions.speed;
 
 			if (event.deltaY >= 0) {
 				speedPercent = -speedPercent;
