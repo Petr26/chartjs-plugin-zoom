@@ -456,9 +456,13 @@ var zoomPlugin = {
 			var rect = event.target.getBoundingClientRect();
 			var offsetX;
 
-			if (stickSide === 'right') offsetX = rect.right;
-			else if (stickSide === 'left') offsetX = rect.left;
-			else offsetX = event.clientX - rect.left;
+			if (stickSide === 'right') {
+				offsetX = rect.right;
+			} else if (stickSide === 'left') {
+				offsetX = rect.left;
+			} else {
+				offsetX = event.clientX - rect.left;
+			}
 
 			var offsetY = event.clientY - rect.top;
 
