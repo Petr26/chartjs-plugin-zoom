@@ -12,3 +12,5 @@ coverage/*
 
 nbproject/*
 *.xml
+
+.idea/*

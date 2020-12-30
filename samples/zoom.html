@@ -3,7 +3,7 @@
 
 <head>
 	<title>Scatter Chart</title>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0-beta.7"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.1"></script>
 	<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
 	<script src="../dist/chartjs-plugin-zoom.min.js"></script>
 
@@ -22,9 +22,6 @@
 			<canvas id="canvas"></canvas>
 		</div>
 	</div>
-	<button onclick="window.myScatter.destroy()">Destroy</button>
-	<button onclick="window.myScatter.destroy(); window.onload(); setButtonText();">Reload</button>
-	<button id="enablePlugin" onclick="managePlugin(); setButtonText()">Enable</button>
 	<script>
 		var randomScalingFactor = function() {
 			return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
@@ -95,8 +92,7 @@
 
 		window.onload = function() {
 			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myScatter = new window.Chart(ctx, {
-				type: 'scatter',
+			window.myScatter = window.Chart.Scatter(ctx, {
 				data: scatterChartData,
 				options: {
 					title: {
@@ -104,13 +100,10 @@
 						text: 'Chart.js Scatter Chart'
 					},
 					scales: {
-						x: {
+						xAxes: [{
 							position: 'top',
-							reverse: true,
 							gridLines: {
-								color: function(context) {
-									return !context.index ? 'rgba(0,255,0,1)' : 'rgba(0,0,0,0.1)';
-								}
+								zeroLineColor: 'rgba(0,255,0,1)'
 							},
 							scaleLabel: {
 								display: true,
@@ -118,24 +111,34 @@
 							},
 							ticks: {
 								maxRotation: 0,
+								reverse: true
 							}
-						},
-						y: {
+						}],
+						yAxes: [{
 							position: 'right',
-							reverse: true,
 							gridLines: {
-								color: function(context) {
-									return !context.index ? 'rgba(0,255,0,1)' : 'rgba(0,0,0,0.1)';
-								}
+								zeroLineColor: 'rgba(0,255,0,1)'
 							},
 							scaleLabel: {
 								display: true,
 								labelString: 'y axis'
+							},
+							ticks: {
+								reverse: true
 							}
-						}
+						}]
 					},
 					plugins: {
-						zoom: false
+						zoom: {
+							pan: {
+								enabled: true,
+								mode: 'xy'
+							},
+							zoom: {
+								enabled: true,
+								mode: 'xy'
+							}
+						}
 					},
 					onClick: function(e) {
 						// eslint-disable-next-line no-alert
@@ -144,29 +147,9 @@
 				}
 			});
 		};
-
-		window.managePlugin = function() {
-			if (typeof window.myScatter.options.plugins.zoom === 'boolean') {
-				window.myScatter.options.plugins.zoom = {
-					pan: {
-						enabled: true,
-						mode: 'xy'
-					},
-					zoom: {
-						enabled: true,
-						mode: 'xy'
-					}
-				};
-			} else {
-				window.myScatter.options.plugins.zoom = false;
-			}
-			window.myScatter.update();
-		};
-
-		window.setButtonText = function() {
-			document.getElementById('enablePlugin').innerText = window.myScatter.options.plugins.zoom ? 'Disable' : 'Enable';
-		};
 	</script>
+	<button onclick="window.myScatter.destroy()">Destroy</button>
+	<button onclick="window.myScatter.destroy(); window.onload()">Reload</button>
 </body>
 
 </html>
